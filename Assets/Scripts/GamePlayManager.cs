@@ -155,19 +155,34 @@ public class GamePlayManager : MonoBehaviour
         {
             if (ObjectMatrix[X + 1, Y]!=null)
             {
-                if (ObjectMatrix[X, Y].GetComponent<PieceIDManager>().colors == ObjectMatrix[X + 1, Y].GetComponent<PieceIDManager>().colors)
+                int OtherPieceColorIndexCount = ObjectMatrix[X + 1, Y].GetComponent<PieceIDManager>().ColorIndex.Length;
+                int MyColorIndexCount = ObjectMatrix[X , Y].GetComponent<PieceIDManager>().ColorIndex.Length;
+                if (OtherPieceColorIndexCount == 1)//single
                 {
-                    Destroy(ObjectMatrix[X, Y].gameObject);
-                    Destroy(ObjectMatrix[X+1, Y].gameObject);
-                    Target--;
+                    if (ObjectMatrix[X, Y].GetComponent<PieceIDManager>().ColorIndex[0] == ObjectMatrix[X + 1, Y].GetComponent<PieceIDManager>().ColorIndex[0])
+                    {
+                        Destroy(ObjectMatrix[X, Y].gameObject);
+                        Destroy(ObjectMatrix[X + 1, Y].gameObject);
+                        Target--;
+                    }
                 }
+                if (OtherPieceColorIndexCount == 2)//half half
+                { 
+                    
+                }
+                if (OtherPieceColorIndexCount == 3)// half-quarters
+                { }
+                if (OtherPieceColorIndexCount == 4)//all quarters
+                { }
+                
+                
             }
         }
         if (X - 1 >= 0)//check left
         {
             if (ObjectMatrix[X -1, Y] != null)
             {
-                if ((int)ObjectMatrix[X, Y].GetComponent<PieceIDManager>().colors==(int)ObjectMatrix[X - 1, Y].GetComponent<PieceIDManager>().colors)
+                if (ObjectMatrix[X, Y].GetComponent<PieceIDManager>().ColorIndex[0] == ObjectMatrix[X - 1, Y].GetComponent<PieceIDManager>().ColorIndex[0])
                 {
                     Destroy(ObjectMatrix[X, Y].gameObject);
                     Destroy(ObjectMatrix[X - 1, Y].gameObject);
