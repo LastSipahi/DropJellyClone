@@ -6,6 +6,7 @@ using UnityEngine;
 public class GamePlayManager : MonoBehaviour
 {
     int[,] PieceMatrix=new int[5,5];
+    Transform[,] ObjectMatrix = new Transform[5,5];
     UI_Manager UIManager;
     TouchControls TC;
     [SerializeField] GameObject[] Pieces;
@@ -141,6 +142,7 @@ public class GamePlayManager : MonoBehaviour
         {
             PositionToFit = new Vector2(column, cell);
             PieceMatrix[column, cell] = 1;
+            ObjectMatrix[column, cell] = obj;
             obj.DOMoveY(-cell, 0.5f);
             Invoke("LoadNextPiece", 1);
             CheckExplosion(column, cell);
@@ -151,14 +153,27 @@ public class GamePlayManager : MonoBehaviour
     {
         if (X + 1 <= 4)//check right
         {
-            if (PieceMatrix[X + 1, Y]==1)
-            { 
-                
+            if (ObjectMatrix[X + 1, Y]!=null)
+            {
+                if (ObjectMatrix[X, Y].GetComponent<PieceIDManager>().colors == ObjectMatrix[X + 1, Y].GetComponent<PieceIDManager>().colors)
+                {
+                    Destroy(ObjectMatrix[X, Y].gameObject);
+                    Destroy(ObjectMatrix[X+1, Y].gameObject);
+                    Target--;
+                }
             }
         }
         if (X - 1 >= 0)//check left
-        { 
-            
+        {
+            if (ObjectMatrix[X -1, Y] != null)
+            {
+                if ((int)ObjectMatrix[X, Y].GetComponent<PieceIDManager>().colors==(int)ObjectMatrix[X - 1, Y].GetComponent<PieceIDManager>().colors)
+                {
+                    Destroy(ObjectMatrix[X, Y].gameObject);
+                    Destroy(ObjectMatrix[X - 1, Y].gameObject);
+                    Target--;
+                }
+            }
         }
     }
 
